@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>rem</title>
+    <style>
+        *{ margin: 0; padding: 0; font: inherit; }
+        .m_rem{ width: 800px; margin: 20px auto; font: 16px/1 '微软雅黑';}
+        .m_rem .txt{ width:300px; height:48px; line-height: 48px; padding-left:10px; border:1px solid #ccc;}
+        .m_rem .btn{ display: inline-block; height:50px; line-height: 50px; padding: 0 30px; margin: 0 10px; color: #fff; background: #f60; cursor: pointer;}
+        .m_rem .btn2{ background: #008000;}
+        .m_rem .txtArea{ width:100%; clear:both; border:1px solid #ccc; height:500px; padding: 5px 10px; line-height: 1.5; margin-top: 20px; overflow-y:auto;}
+        .m_rem p{ color: #f60; padding-top: 10px;}
+    </style>
+</head>
+
+<body>
+
+<div class="m_rem">
+    <input type="number" class="txt" id="j_txt" placeholder="设计图宽">
+    <span class="btn" id="j_create">生成media</span>
+    <span class="btn btn2" id="j_compress">压缩</span>
+    <textarea class="txtArea" id="j_box"></textarea>
+    <p>* 1rem = 100px</p>
+</div>
+
+
+
+<script>
+//100% = 16px
+//320/0.625
+//300% 32px
+/*
+var scale = 640/6.25;
+
+for(var i=320; i<=640; i++){
+	var s = i/scale*100;
+	
+	document.write('@media (min-width: '+i+'px) { html { font-size: '+s+'%; } }<br>');	
+}
+*/
+
+window.onload = function(){
+    var oCreate = document.querySelector('#j_create');
+    var oCompress = document.querySelector('#j_compress');
+    var oTxt = document.querySelector('#j_txt');
+
+    oCreate.onclick = function(){
+        var v = oTxt.value.trim();
+        if(v){
+            media(parseInt(v),1)
+        }
+    };
+
+    oCompress.onclick = function(){
+        var v = oTxt.value.trim();
+        if(v){
+            media(parseInt(v))
+        }
+    };
+};
+
+function media(maxW, type){
+    var oBox = document.querySelector('#j_box');
+	var scale = maxW/6.25;
+    var br = '';
+    var str = '';
+    if(type == 1){
+        br = '\n';
+    }
+	for(var i=320; i<=maxW; i++){
+		var s = i/scale*100;
+        str += '@media (min-width: '+i+'px) { html { font-size: '+s+'%; } }'+br;
+	}
+    oBox.value = str;
+    oBox.select();
+}
+
+</script>
+
+</body>
+</html>
