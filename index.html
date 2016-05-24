@@ -56,6 +56,9 @@ function media(maxW, type){
     }
 	for(var i=320; i<=maxW; i++){
 		var s = i/scale*100;
+        if(i == 320){
+            str += '@media (max-width: 320px) { html { font-size: '+s+'%; } }'+br;
+        }
         str += '@media (min-width: '+i+'px) { html { font-size: '+s+'%; } }'+br;
 	}
     oBox.value = str;
